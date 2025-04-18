@@ -18,7 +18,7 @@ class ClienteTemp implements ITemplate
     {
         $this->cabecalho();
 
-        $fullPath = realpath($_SERVER["DOCUMENT_ROOT"] . "/provas" . $caminho);
+        $fullPath = realpath($_SERVER["DOCUMENT_ROOT"] . "/API-Provas/" . $caminho);
         if ($fullPath && file_exists($fullPath)) {
             include $fullPath;
         } else {

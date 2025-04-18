@@ -10,6 +10,7 @@ use template\ITemplate;
 class Questoes
 {
     private ITemplate $template;
+
     public function __construct()
     {
         $this->template = new ClienteTemp();
@@ -17,31 +18,54 @@ class Questoes
 
     public function listar()
     {
-       $service = new QuestoesService();
-      $resultado= $service->listarQuestoes();
-       $this->template->layout("\\public\\questoes\\listar.php",$resultado);
+        $service = new QuestoesService();
+        $resultado = $service->listarQuestoes();
+        // Corrigido caminho do arquivo de view:
+        $this->template->layout(caminho: "public/questoes/listar.php", parametro: $resultado);
     }
 
-    // public function inserir()
-    // {
-    //     $nome = $_POST["nome"];
-    //     $endereco = $_POST["endereco"];
-    //    $service = new QuestoesService();
-    //   $resultado= $service->inserir($nome,$endereco);
-    //    header("location: /mvc20251/cliente/lista?info=1");
-    // }
+   
+    public function inserir()
+{
+    // Pegando os dados do formulário
+    $enunciado = $_POST["enunciado"] ?? '';
+    $materia = $_POST["materia"] ?? '';
+    $a = $_POST["a"] ?? '';
+    $b = $_POST["b"] ?? '';
+    $c = $_POST["c"] ?? '';
+    $d = $_POST["d"] ?? '';
+    $correta = $_POST["correta"] ?? '';
+
+    // Cria o objeto Questao (ajustando namespace!)
+    $questao = new \Models\Questao();
+    $questao->Enunciado = $enunciado;
+    $questao->Materia = $materia;
+    $questao->A = $a;
+    $questao->B = $b;
+    $questao->C = $c;
+    $questao->D = $d;
+    $questao->AlternativaCorreta = $correta;
+
+    $service = new QuestoesService();
+    $service->inserir($questao);
+
+    // Redireciona para a lista após inserir
+    header("Location: /API-Provas/?param=questoes/lista");
+    exit();
+}
 
     public function formulario()
     {
-     
-       $this->template->layout("\\public\\questoes\\form.php");
+        // Corrigido caminho do arquivo de view:
+        $this->template->layout(caminho: "public/questoes/form.php");
     }
+
     public function alterarForm()
     {
-        $id=$_GET["id"];
+        $id = $_GET["id"] ?? null;
         $service = new QuestoesService();
-        $resultado =$service->listarId($id);
-        
-       $this->template->layout("\\public\\questoes\\form.php",$resultado);
+        $resultado = $service->listarId($id);
+        // Corrigido caminho do arquivo de view:
+        $this->template->layout(caminho: "public/questoes/form.php", parametro: $resultado);
     }
 }

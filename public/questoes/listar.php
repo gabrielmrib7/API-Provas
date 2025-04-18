@@ -49,7 +49,7 @@
  }
 
 ?>
-<form method="POST" action="/provas/questoes/inserir">
+<form method="POST" action="/API-Provas/?param=questoes/inserir">
 <tr>
         <td></td>
         <td><textarea type="text" name="enunciado"></textarea></td>
