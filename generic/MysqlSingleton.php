@@ -9,7 +9,7 @@ class MysqlSingleton{
     private $conexao = null;
     private $dsn = 'mysql:host=localhost;dbname=minimal_api';
     private $usuario = 'root';
-    private $senha = '';
+    private $senha = 'root';
 
     private function __construct(){
         if($this->conexao == null){

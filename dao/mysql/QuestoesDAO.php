@@ -38,6 +38,35 @@ class QuestoesDAO extends MysqlFactory implements IQuestoesDAO{
         return $this->banco->executar($sql, $param);
     }
 
+    public function alterar(\Models\Questao $questao, $id)
+    {
+        
+        $sql = "UPDATE questoes 
+        SET 
+            Enunciado = :Enunciado,
+            Materia = :Materia,
+            A = :A,
+            B = :B,
+            C = :C,
+            D = :D,
+            AlternativaCorreta = :AlternativaCorreta
+        WHERE 
+            Id = :Id";
+
+    $param = [
+        ':Enunciado' => $questao->Enunciado,
+        ':Materia' => $questao->Materia,
+        ':A' => $questao->A,
+        ':B' => $questao->B,
+        ':C' => $questao->C,
+        ':D' => $questao->D,
+        ':AlternativaCorreta' => $questao->AlternativaCorreta,
+        ':Id' => $id
+    ];
+
+    return $this->banco->executar($sql, $param);
+    }
+
     public function deletar($id) {
         $sql = "DELETE FROM questoes WHERE id = :id";
         $param = [':id' => $id];

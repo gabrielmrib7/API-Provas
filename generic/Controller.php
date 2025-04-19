@@ -7,8 +7,9 @@ class Controller{
         $this->arrChamadas = [
             "questoes/lista" =>new Acao("Questoes","listar"),
             "questoes/formulario" =>new Acao("Questoes","formulario"),
-            "questoes/formularioalterar" =>new Acao("Questoes","alterarForm"),
-            "questoes/inserir" =>new Acao("Questoes","inserir")
+            "questoes/alterar" =>new Acao("Questoes","alterar"),
+            "questoes/inserir" =>new Acao("Questoes","inserir"),
+            "questoes/deletar" =>new Acao("Questoes","deletar")
            
         ];
     }

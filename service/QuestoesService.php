@@ -13,10 +13,10 @@ class QuestoesService extends QuestoesDAO{
     public function inserir(Questao $questao){
         return parent::inserir($questao);
     }
-    // public function alterar(Questao $questao)
-    // {
-    //     return parent::alterar(Questao $questao);
-    // }
+    public function alterar(Questao $questao, $id)
+    {
+        return parent::alterar( $questao, $id);
+    }
     public function listarId($id)
     {
         return parent::listarId($id);

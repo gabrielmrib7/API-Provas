@@ -1,3 +1,50 @@
+<script>
+      function editarQuestoes(id) {
+        const linha = document.getElementById(id);
+
+// Habilita inputs e textareas desabilitados
+const inputs = linha.querySelectorAll('input:disabled, textarea:disabled');
+inputs.forEach(el => {
+  el.disabled = false;
+});
+
+// Mostra o <select>
+const select = linha.querySelector('select');
+if (select) {
+  select.style.display = 'inline';
+}
+
+// Esconde o texto da alternativa correta (A, B, C, D)
+const alternativaTexto = select?.previousSibling;
+if (alternativaTexto && alternativaTexto.nodeType === Node.TEXT_NODE) {
+  alternativaTexto.textContent = ''; // limpa o texto da alternativa
+}
+
+// Mostra o botão "Update"
+const btnUpdate = linha.querySelector('input[name="btnUpdate"]');
+if (btnUpdate) {
+  btnUpdate.style.display = 'inline';
+}
+
+// Esconde o botão "Editar"
+const btnEditar = linha.querySelector('button[onclick^="editarQuestoes"]');
+if (btnEditar) {
+  btnEditar.style.display = 'none';
+}
+
+console.log(`Editando questão ID: ${id}`);
+  }
+
+  function deletarQuestao(id) {
+    if (confirm('Tem certeza que deseja deletar essa questão?')) {
+        const form = document.getElementById(`form ${id}`);
+        form.action = `/API-Provas/?param=questoes/deletar&id=${id}`;
+        form.submit();
+    }
+}
+</script>
+
+
 <head>
 <style>
         table {
@@ -31,19 +78,29 @@
 <?php
  foreach( $parametro as $p){
     ?>
-    <tr>
-        <td><?= $p["Id"] ?></td>
-        <td><?= $p["Enunciado"] ?></td>
-        <td><?= $p["Materia"] ?></td>
-        <td><?= $p["A"] ?></td>
-        <td><?= $p["B"] ?></td>
-        <td><?= $p["C"] ?></td>
-        <td><?= $p["D"] ?></td>
-        <td colspan="2"><?= $p["AlternativaCorreta"] ?></td>
-        <td><button>Deletar</button></td>
-        <td><button>Editar</button></td>
-        
+    <form id="form <?= $p["Id"] ?>" method="POST" action="/API-Provas/questoes/alterar&id=<?=$p["Id"]?>">
+    <tr id="<?= $p["Id"]?>">
+        <td name="id"><?= $p["Id"] ?></td>
+        <td><textarea disabled type="text" name="enunciado"><?= $p["Enunciado"] ?></textarea></td>
+        <td><input disabled type="text" name="materia" value="<?= $p["Materia"] ?>"></td>
+        <td><textarea disabled type="text" name="a"><?= $p["A"] ?></textarea></td>
+        <td><textarea disabled type="text" name="b"><?= $p["B"] ?></textarea></td>
+        <td><textarea disabled type="text" name="c"><?= $p["C"] ?></textarea></td>
+        <td><textarea disabled type="text" name="d"><?= $p["D"] ?></textarea></td>
+        <td colspan="2"><?= chr($p["AlternativaCorreta"]+64) ?>
+            <select name="correta" style="display: none">
+            <option value="1">Alternativa A</option>
+            <option value="2">Alternativa B</option>
+            <option value="3">Alternativa C</option>
+            <option value="4">Alternativa D</option>
+            </select>
+        </td>
+        <td><button type="button" onClick="editarQuestoes(<?=$p["Id"]?>)">Editar</button>
+        <input style="display: none" name="btnUpdate" type="submit" value="Update">
+        </td>
+        <td><button onClick="deletarQuestao(<?=$p["Id"]?>)">Deletar</button></td>
     </tr>
+    </form>
     
     <?php
  }

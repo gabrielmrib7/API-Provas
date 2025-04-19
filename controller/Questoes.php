@@ -50,7 +50,7 @@ class Questoes
     $service->inserir($questao);
 
     // Redireciona para a lista após inserir
-    header("Location: /API-Provas/?param=questoes/lista");
+    header("Location: /API-Provas/questoes/lista");
     exit();
 }
 
@@ -59,13 +59,55 @@ class Questoes
         // Corrigido caminho do arquivo de view:
         $this->template->layout(caminho: "public/questoes/form.php");
     }
+    
+    public function deletar(){
+        $id = $_GET["id"] ?? null;
 
-    public function alterarForm()
+        if (!$id) {
+            // Redireciona se o ID estiver ausente
+            header("Location: /API-Provas/questoes/lista");
+            exit();
+        }
+
+        $service = new QuestoesService();
+        $service->deletar($id); 
+    
+        header("Location: /API-Provas/questoes/lista");
+        exit();
+    }
+
+    public function alterar()
     {
         $id = $_GET["id"] ?? null;
+
+        if (!$id) {
+            // Redireciona se o ID estiver ausente
+            header("Location: /API-Provas/questoes/lista");
+            exit();
+        }
+    
+        $enunciado = $_POST["enunciado"] ?? '';
+        $materia = $_POST["materia"] ?? '';
+        $a = $_POST["a"] ?? '';
+        $b = $_POST["b"] ?? '';
+        $c = $_POST["c"] ?? '';
+        $d = $_POST["d"] ?? '';
+        $correta = $_POST["correta"] ?? '';
+    
+        $questao = new \Models\Questao();
+        $questao->Id = $id;
+        $questao->Enunciado = $enunciado;
+        $questao->Materia = $materia;
+        $questao->A = $a;
+        $questao->B = $b;
+        $questao->C = $c;
+        $questao->D = $d;
+        $questao->AlternativaCorreta = $correta;
+    
         $service = new QuestoesService();
-        $resultado = $service->listarId($id);
-        // Corrigido caminho do arquivo de view:
-        $this->template->layout(caminho: "public/questoes/form.php", parametro: $resultado);
+        $service->alterar($questao, $id); // ← Agora está passando o objeto
+    
+        header("Location: /API-Provas/questoes/lista");
+        exit();
     }
 }
