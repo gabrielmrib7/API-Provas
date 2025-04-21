@@ -54,11 +54,6 @@ class Questoes
     exit();
 }
 
-    public function formulario()
-    {
-        // Corrigido caminho do arquivo de view:
-        $this->template->layout(caminho: "public/questoes/form.php");
-    }
 
     public function gerarProva()
     {
