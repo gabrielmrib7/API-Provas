@@ -9,7 +9,8 @@ class Controller{
             "questoes/formulario" =>new Acao("Questoes","formulario"),
             "questoes/alterar" =>new Acao("Questoes","alterar"),
             "questoes/inserir" =>new Acao("Questoes","inserir"),
-            "questoes/deletar" =>new Acao("Questoes","deletar")
+            "questoes/deletar" =>new Acao("Questoes","deletar"),
+            "questoes/gerarProva" =>new Acao("Questoes","gerarProva")
            
         ];
     }

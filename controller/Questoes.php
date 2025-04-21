@@ -59,6 +59,39 @@ class Questoes
         // Corrigido caminho do arquivo de view:
         $this->template->layout(caminho: "public/questoes/form.php");
     }
+
+    public function gerarProva()
+    {
+    $materia = $_POST["materia"] ?? '';
+    $quantidade = $_POST["questoes"] ?? 0;
+
+    $service = new QuestoesService();
+    $questoes = $service->gerarProva($materia, $quantidade);
+
+    
+    require_once 'vendor/autoload.php';
+
+    $dompdf = new \Dompdf\Dompdf();
+    $html = "<h1>Prova de {$materia}</h1><ol>";
+
+    foreach ($questoes as $q) {
+        $html .= "<li><p>{$q['Enunciado']}</p>";
+        $html .= "<ul>
+                    <li>A) {$q['A']}</li>
+                    <li>B) {$q['B']}</li>
+                    <li>C) {$q['C']}</li>
+                    <li>D) {$q['D']}</li>
+                  </ul></li>";
+    }
+
+    $html .= "</ol>";
+
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'portrait');
+    $dompdf->render();
+    $dompdf->stream("prova-{$materia}.pdf", ["Attachment" => false]);
+
+    }
     
     public function deletar(){
         $id = $_GET["id"] ?? null;

@@ -1,0 +1,17 @@
+{
+    "name": "pichau/api-provas",
+    "autoload": {
+        "psr-4": {
+            "Pichau\\ApiProvas\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "gabrielmrib7",
+            "email": "gabrielmrib@hotmail.com"
+        }
+    ],
+    "require": {
+        "dompdf/dompdf": "^3.1"
+    }
+}

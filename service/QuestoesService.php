@@ -21,4 +21,9 @@ class QuestoesService extends QuestoesDAO{
     {
         return parent::listarId($id);
     }
+
+    public function gerarProva($materia, $quantidade)
+    {
+        return parent::gerarProva($materia, $quantidade);
+    }
 }

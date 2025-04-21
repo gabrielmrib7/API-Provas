@@ -61,7 +61,6 @@ console.log(`Editando questão ID: ${id}`);
         }
     </style>
 </head>
-<a href="/provas/questoes/formulario">Cadastrar</a>
 <table>
     <tr>
         <th>ID</th>
@@ -82,7 +81,14 @@ console.log(`Editando questão ID: ${id}`);
     <tr id="<?= $p["Id"]?>">
         <td name="id"><?= $p["Id"] ?></td>
         <td><textarea disabled type="text" name="enunciado"><?= $p["Enunciado"] ?></textarea></td>
-        <td><input disabled type="text" name="materia" value="<?= $p["Materia"] ?>"></td>
+        <td><?= $p["Materia"] ?>
+        <select name="materia" style="display: none">
+        <option value="Matematica">Matematica</option>
+        <option value="Portugues">Portugues</option>
+        <option value="Programação">Programação</option>
+        <option value="Aplicações para internet">Aplicações para internet</option>
+    </select>
+    </td>
         <td><textarea disabled type="text" name="a"><?= $p["A"] ?></textarea></td>
         <td><textarea disabled type="text" name="b"><?= $p["B"] ?></textarea></td>
         <td><textarea disabled type="text" name="c"><?= $p["C"] ?></textarea></td>
@@ -110,7 +116,12 @@ console.log(`Editando questão ID: ${id}`);
 <tr>
         <td></td>
         <td><textarea type="text" name="enunciado"></textarea></td>
-        <td><input type="text" name="materia"></td>
+        <td><select name="materia">
+        <option value="Matematica">Matematica</option>
+        <option value="Portugues">Portugues</option>
+        <option value="Programação">Programação</option>
+        <option value="Aplicações para internet">Aplicações para internet</option>
+    </select></td>
         <td><input type="text" name="a"></td>
         <td><input type="text" name="b"></td>
         <td><input type="text" name="c"></td>
@@ -126,5 +137,19 @@ console.log(`Editando questão ID: ${id}`);
         <td colspan="2"><input type="submit" value="enviar" /></td>
         
     </tr>
-</form>   
+</form>
+
+  
 </table>
+
+<form method="POST" action="/API-Provas/?param=questoes/gerarProva">
+<label>Materia:<select name="materia">
+        <option value="Matematica">Matematica</option>
+        <option value="Portugues">Portugues</option>
+        <option value="Programação">Programação</option>
+        <option value="Aplicações para internet">Aplicações para internet</option>
+        <option value="Geral">Geral</option>
+    </select></label>
+    <label>Numero de questões: <input type="number" name="questoes"></label>
+    <input type="submit" value="Gerar Prova" />
+</form> 
